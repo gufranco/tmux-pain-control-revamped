@@ -75,12 +75,13 @@ teardown() {
   [[ "${output}" == *"swap-window -d -t +1"* ]]
 }
 
-@test "applier - synchronize toggle is bound and configurable" {
+@test "applier - synchronize toggle keeps display-message in the binding via an escaped separator" {
   run apply_pain
-  [[ "${output}" == *"S set-window-option synchronize-panes"* ]]
+  [[ "${output}" == *'S set-window-option synchronize-panes \; display-message'* ]]
+  [[ "${output}" != *'synchronize-panes ; display-message'* ]]
   tmux set-option -gq "@pane_control_sync_key" "Y"
   run apply_pain
-  [[ "${output}" == *"Y set-window-option synchronize-panes"* ]]
+  [[ "${output}" == *'Y set-window-option synchronize-panes \; display-message'* ]]
 }
 
 @test "applier - binding notes are added only on tmux 3.1 and up" {

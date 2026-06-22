@@ -116,8 +116,10 @@ apply_pain() {
   pain_bind "-r" "<" "Swap window left" swap-window -d -t -1
   pain_bind "-r" ">" "Swap window right" swap-window -d -t +1
 
-  # Toggle synchronized input across panes, with visible state.
-  pain_bind "" "${synckey}" "Toggle pane sync" set-window-option synchronize-panes ";" display-message "synchronize-panes #{?synchronize-panes,on,off}"
+  # Toggle synchronized input across panes, with visible state. The separator is
+  # an escaped \; so tmux keeps display-message inside the binding; a bare ; would
+  # split it off and run the message on every config load.
+  pain_bind "" "${synckey}" "Toggle pane sync" set-window-option synchronize-panes "\\;" display-message "synchronize-panes #{?synchronize-panes,on,off}"
 
   # Optional seamless vim navigation, off by default. Needs the copy-mode-vi
   # table, which is tmux 2.4 and up.
