@@ -49,16 +49,21 @@ _path='#{pane_current_path}'
 # vim family program runs in the pane, else the tmux pane. Mirrors the
 # vim-tmux-navigator guard so the two interoperate.
 _apply_vim_nav() {
-  local is_vim
-  is_vim="ps -o state= -o comm= -t '#{pane_tty}' | grep -iqE '^[^TXZ ]+ +(\\S+/)?g?\\.?(view|l?n?vim?x?|fzf)(diff)?(-wrapped)?\$'"
+  local is_vim pattern
+  # The process pattern that marks a pane as running vim. Overridable so a
+  # wrapped or renamed editor still hands off, matching vim-tmux-navigator.
+  pattern="$(get_opt @pane_control_vim_pattern '(\\S+/)?g?\\.?(view|l?n?vim?x?|fzf)(diff)?(-wrapped)?')"
+  is_vim="ps -o state= -o comm= -t '#{pane_tty}' | grep -iqE '^[^TXZ ]+ +${pattern}\$'"
   _emit bind-key -n C-h if-shell "${is_vim}" "send-keys C-h" "select-pane -L"
   _emit bind-key -n C-j if-shell "${is_vim}" "send-keys C-j" "select-pane -D"
   _emit bind-key -n C-k if-shell "${is_vim}" "send-keys C-k" "select-pane -U"
   _emit bind-key -n C-l if-shell "${is_vim}" "send-keys C-l" "select-pane -R"
+  _emit bind-key -n 'C-\' if-shell "${is_vim}" 'send-keys C-\\' 'select-pane -l'
   _emit bind-key -T copy-mode-vi C-h select-pane -L
   _emit bind-key -T copy-mode-vi C-j select-pane -D
   _emit bind-key -T copy-mode-vi C-k select-pane -U
   _emit bind-key -T copy-mode-vi C-l select-pane -R
+  _emit bind-key -T copy-mode-vi 'C-\' select-pane -l
 }
 
 apply_pain() {

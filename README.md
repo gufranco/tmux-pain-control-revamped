@@ -67,11 +67,14 @@ run-shell ~/.tmux/plugins/tmux-pain-control-revamped/pain-control-revamped.tmux
 | `@new_window_path` | `true` | new window opens in the current path; set `false` for the default behavior |
 | `@pane_control_sync_key` | `S` | key that toggles `synchronize-panes` |
 | `@pane_control_disabled_keys` | empty | space or comma separated keys to leave unbound, for example `"c <"` |
-| `@pane_control_vim_navigation` | `off` | set `on` for prefixless `Ctrl+h/j/k/l` pane and vim-split navigation |
+| `@pane_control_vim_navigation` | `off` | set `on` for prefixless `Ctrl+h/j/k/l` and `Ctrl+\` pane and vim-split navigation |
+| `@pane_control_vim_pattern` | the vim-family regex | the process pattern that marks a pane as running vim; override for a wrapped or renamed editor |
 
 ## Working with vim-tmux-navigator
 
-The prefixed `h/j/k/l` here and the prefixless `Ctrl+h/j/k/l` of vim-tmux-navigator live in different key tables and never collide, so the two are complementary: keep using both. If you do not run vim-tmux-navigator, set `@pane_control_vim_navigation 'on'` to get the same `Ctrl+h/j/k/l` behavior built in. It uses the standard `is_vim` process check, so the same chord moves your vim split when vim is focused and the tmux pane otherwise. This needs tmux 2.4 or newer and binds the chords without a prefix, which shadows `Ctrl+l` clear-screen, so it stays off by default.
+The prefixed `h/j/k/l` here and the prefixless `Ctrl+h/j/k/l` of vim-tmux-navigator live in different key tables and never collide, so the two are complementary: keep using both. To stop running vim-tmux-navigator's tmux side, set `@pane_control_vim_navigation 'on'` and this plugin provides the same prefixless `Ctrl+h/j/k/l` plus `Ctrl+\` for the previous pane, with the same `is_vim` process check, so the same chord moves your vim split when vim is focused and the tmux pane otherwise. The `is_vim` pattern is overridable through `@pane_control_vim_pattern`, matching vim-tmux-navigator's `@vim_navigator_pattern`. This needs tmux 2.4 or newer and binds the chords without a prefix, which shadows `Ctrl+l` clear-screen, so it stays off by default.
+
+This replaces only the tmux half of vim-tmux-navigator. The Neovim or Vim half, the in-editor keymaps, is a Vim plugin and still belongs in your editor config.
 
 ## Compatibility
 

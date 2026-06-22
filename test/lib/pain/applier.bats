@@ -113,6 +113,21 @@ teardown() {
   [[ "${output}" == *"copy-mode-vi C-h select-pane -L"* ]]
 }
 
+@test "applier - smart vim navigation binds the previous-pane chord" {
+  tmux set-option -gq "@pane_control_vim_navigation" "on"
+  run apply_pain
+  [[ "${output}" == *"-n C-\\ if-shell"* ]]
+  [[ "${output}" == *"select-pane -l"* ]]
+  [[ "${output}" == *"copy-mode-vi C-\\ select-pane -l"* ]]
+}
+
+@test "applier - the vim detection pattern is configurable" {
+  tmux set-option -gq "@pane_control_vim_navigation" "on"
+  tmux set-option -gq "@pane_control_vim_pattern" "(my-editor)"
+  run apply_pain
+  [[ "${output}" == *"(my-editor)"* ]]
+}
+
 @test "applier - smart vim navigation is skipped below tmux 2.4" {
   tmux set-option -gq "@pane_control_vim_navigation" "on"
   _tmux_version_string() { echo "tmux 2.2"; }
