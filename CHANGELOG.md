@@ -5,6 +5,16 @@ All notable changes to this project are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.1] - 2026-06-23
+
+### Changed
+
+- Rechecked the binding set against upstream `tmux-plugins/tmux-pain-control`.
+  Pane navigation, repeatable resizing, directory-preserving splits, window
+  swapping, and the synchronize-panes toggle are all present, each carries a
+  `-N` key description, and the plugin adds full-width and full-height splits
+  plus optional vim navigation beyond the upstream. No code change needed.
+
 ## [1.0.0] - 2026-06-21
 
 ### Added
