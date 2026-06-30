@@ -5,6 +5,27 @@ All notable changes to this project are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.0] - 2026-06-30
+
+### Added
+
+- Pane workflow bindings: join a pane in (`@`) and break one out (`!`), swap with
+  the previous or next pane (`{` `}`), promote a pane to the main slot (`+`), and
+  a marked-pane swap (`m` to mark, `=` to swap) on tmux 2.1 and up.
+- Smart split (`*`) that picks the longer axis and keeps the current path, plus
+  even-horizontal, even-vertical, and main-vertical layout presets (`E` `V` `B`).
+- Window helpers: move the current window to another session by name (`.`) and a
+  confirm-before kill-window (`&`).
+- Respawn the current pane in place after a confirm (`R`), capture the whole
+  scrollback to a file (`C`), name a pane from a prompt (`P`, tmux 2.6 and up),
+  and an optional pane-title border via `@pane_control_pane_titles` (tmux 2.3+).
+- Ephemeral scratch popup shell (`g`) on tmux 3.2 and up, with an optional
+  `@pane_control_scratch_command` to run a specific tool.
+- Edge no-wrap pane selection via `@pane_control_no_wrap` (tmux 2.6 and up), and
+  a restored prefixed `C-l` clear-screen when smart vim navigation is on.
+- An option for every new key so any binding can be remapped, and every new key
+  honors `@pane_control_disabled_keys`.
+
 ## [1.0.1] - 2026-06-23
 
 ### Changed
